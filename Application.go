@@ -148,7 +148,8 @@ dependencies to controllers
 */
 func (a *Application) setupServices() {
 	a.JokeService = jokes.NewJokeService(jokes.JokeServiceConfig{
-		Config: a.Config,
+		Config:     a.Config,
+		HttpClient: &http.Client{},
 	})
 }
 
