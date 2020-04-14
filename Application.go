@@ -6,6 +6,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -157,15 +158,22 @@ Start begins serving the API application
 func (a *Application) Start() chan os.Signal {
 	go func() {
 		var err error
+		var host string
+
+		if a.Config.GetString("PORT") != "" {
+			host = fmt.Sprintf(":%s", a.Config.GetString("PORT"))
+		} else {
+			host = a.Config.GetString("server.host")
+		}
 
 		a.Logger.WithFields(logrus.Fields{
-			"host":          a.Config.GetString("server.host"),
+			"host":          host,
 			"serverVersion": a.Config.GetString("server.version"),
 			"debug":         a.Config.GetBool("server.debug"),
 			"logLevel":      a.Config.GetString("fireplace.loglevel"),
 		}).Infof("Starting")
 
-		if err = a.HTTPServer.Start(a.Config.GetString("server.host")); err != nil {
+		if err = a.HTTPServer.Start(host); err != nil {
 			if err != http.ErrServerClosed {
 				a.Logger.WithError(err).Fatalf("Unable to start application")
 			} else {

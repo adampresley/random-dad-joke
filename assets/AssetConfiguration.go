@@ -1,8 +1,8 @@
+// +build dev
+
 /*
  * Copyright (c) 2020. Adam Presley All Rights Reserved
  */
-
-// +build dev
 
 package assets
 

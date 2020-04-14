@@ -24,6 +24,8 @@ func NewConfig(serverVersion string) *viper.Viper {
 	pflag.Parse()
 	result.BindPFlags(pflag.CommandLine)
 
+	result.BindEnv("PORT")
+
 	result.SetConfigName("config")
 	result.SetConfigType("yaml")
 	result.AddConfigPath("/opt/starter")
