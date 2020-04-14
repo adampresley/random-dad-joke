@@ -23,4 +23,4 @@ require (
 	gopkg.in/ini.v1 v1.55.0 // indirect
 )
 
-go 1.14
+go 1.12
